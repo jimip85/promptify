@@ -51,9 +51,6 @@ const PromptCard: React.FC<PromptCardProps> = ({
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
-    if(isModalOpen === false) {
-      setCompletion("")
-    }
   };
 
   return (
