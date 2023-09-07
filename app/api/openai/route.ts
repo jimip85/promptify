@@ -1,5 +1,5 @@
  export const fetchData = async (content:string) => {
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = `${process.env.OPENAI_API_KEY}`;
   
     if (!apiKey) {
       console.error("OpenAI API key is missing.");
@@ -20,7 +20,7 @@
           messages: [
             {
               role: "user",
-              content: content //this should be dynamic 
+              content: content
             },
           ],
         }),

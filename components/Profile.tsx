@@ -1,18 +1,7 @@
 import React from "react";
 import PromptCard from "./PromptCard";
+import { Post } from "@app/types";
 
-interface User {
-  _id: string;
-  username: string;
-  email: string;
-  image: string;
-}
-
-interface Post {
-  creator: User;
-  prompt: string;
-  tag: string;
-}
 
 interface ProfileProps {
   name: string;

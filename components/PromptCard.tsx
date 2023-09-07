@@ -45,7 +45,7 @@ const PromptCard: React.FC<PromptCardProps> = ({
     setTimeout(() => setCopied(""), 3000);
   };
 
-  const handlePrompt = () => {
+  const requestPrompt = () => {
     fetchData(post.prompt);
   }
 
@@ -77,7 +77,7 @@ const PromptCard: React.FC<PromptCardProps> = ({
             height={12}
           />
         </div>
-        <div className="copy_btn" onClick={handlePrompt}>
+        <div className="copy_btn" onClick={requestPrompt}>
           <Image
             src={copied === post.prompt ? "/icons/tick.svg" : "/images/logo.svg"}
             alt="copy-text image"

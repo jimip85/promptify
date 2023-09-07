@@ -4,20 +4,8 @@ import React, { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 import Search from "./Search";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Post } from "@app/types";
 
-
-interface User {
-  _id: string;
-  username: string;
-  email: string;
-  image: string;
-}
-
- interface Post {
-  creator: User;
-  prompt: string;
-  tag: string;
-}
 
 interface PromptCardListProps {
   data: Post[];
