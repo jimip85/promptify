@@ -5,19 +5,8 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { fetchData } from "@app/api/openai/route";
+import { Post } from "@app/types";
 
- interface User {
-  _id: string;
-  username: string;
-  email: string;
-  image: string;
-}
-
- interface Post {
-  creator: User;
-  prompt: string;
-  tag: string;
-}
 
 interface PromptCardProps {
   post: Post;
@@ -38,6 +27,9 @@ const PromptCard: React.FC<PromptCardProps> = ({
   const router = useRouter();
 
   const [copied, setCopied] = useState<string>("");
+  const [completion, setCompletion] = useState<string>("")
+
+
 
   const handleCopy = () => {
     setCopied(post.prompt);
@@ -45,9 +37,24 @@ const PromptCard: React.FC<PromptCardProps> = ({
     setTimeout(() => setCopied(""), 3000);
   };
 
-  const requestPrompt = () => {
-    fetchData(post.prompt);
-  }
+  const requestPrompt = async () => {
+    try {
+      const result = await fetchData(post.prompt);
+      setCompletion(result);
+      toggleModal();
+    } catch (error) {
+      console.log("Promise failed", error);
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    if(isModalOpen === false) {
+      setCompletion("")
+    }
+  };
 
   return (
     <div className="prompt_card glassmorphism">
@@ -79,7 +86,7 @@ const PromptCard: React.FC<PromptCardProps> = ({
         </div>
         <div className="copy_btn" onClick={requestPrompt}>
           <Image
-            src={copied === post.prompt ? "/icons/tick.svg" : "/images/logo.svg"}
+            src={completion === post.prompt ? "/icons/tick.svg" : "/images/logo.svg"}
             alt="copy-text image"
             width={12}
             height={12}
@@ -108,6 +115,16 @@ const PromptCard: React.FC<PromptCardProps> = ({
             Delete
           </p>
         </div>
+      )}
+
+      {/* Modal */}
+      {isModalOpen && (
+            <div >
+            <div className="w-max my-4">
+            <h1 className="animate-typing overflow-hidden whitespace-nowrap">{completion}</h1>
+            </div>
+            <button className="flex text-md font-semibold cursor-pointer" onClick={toggleModal}>Close</button>
+          </div>
       )}
     </div>
   );
