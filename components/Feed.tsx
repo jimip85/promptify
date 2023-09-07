@@ -29,8 +29,6 @@ const PromptCardList: React.FC<PromptCardListProps> = ({
   data,
   handleTagClick,
 }) => {
-
-  console.log(data);
   return (
     <div className="mt-10 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
       <TransitionGroup>

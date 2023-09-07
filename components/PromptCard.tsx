@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import { fetchData } from "@app/api/openai/route";
 
  interface User {
   _id: string;
@@ -38,13 +39,15 @@ const PromptCard: React.FC<PromptCardProps> = ({
 
   const [copied, setCopied] = useState<string>("");
 
-  console.log(session)
-
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(""), 3000);
   };
+
+  const handlePrompt = () => {
+    fetchData(post.prompt);
+  }
 
   return (
     <div className="prompt_card glassmorphism">
@@ -69,6 +72,14 @@ const PromptCard: React.FC<PromptCardProps> = ({
         <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={copied === post.prompt ? "/icons/tick.svg" : "/icons/copy.svg"}
+            alt="copy-text image"
+            width={12}
+            height={12}
+          />
+        </div>
+        <div className="copy_btn" onClick={handlePrompt}>
+          <Image
+            src={copied === post.prompt ? "/icons/tick.svg" : "/images/logo.svg"}
             alt="copy-text image"
             width={12}
             height={12}
