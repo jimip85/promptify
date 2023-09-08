@@ -12,7 +12,6 @@ interface PromptCardListProps {
   handleTagClick: (tagName: string) => void;
 }
 
-
 const PromptCardList: React.FC<PromptCardListProps> = ({
   data,
   handleTagClick,
@@ -20,11 +19,10 @@ const PromptCardList: React.FC<PromptCardListProps> = ({
   return (
     <div className="mt-10 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
       <TransitionGroup>
-        {data.map((post) => (
-          <CSSTransition timeout={400} classNames="fade">
+        {data.map((post, index) => (
+          <CSSTransition key={`${post.creator._id}-${index}`} timeout={400} classNames="fade">
             <div className="mb-6">
               <PromptCard
-                key={post.creator._id}
                 post={post}
                 handleTagClick={handleTagClick}
               />
@@ -35,6 +33,7 @@ const PromptCardList: React.FC<PromptCardListProps> = ({
     </div>
   );
 };
+
 
 const Feed: React.FC = () => {
   const [allPosts, setAllPosts] = useState<Post[]>([]);

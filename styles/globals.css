@@ -30,7 +30,6 @@
 
 .main:after {
   content: "";
-  background-image: url("/grid/bg.jpg");
   z-index: 1;
   position: absolute;
   width: 100%;
@@ -176,7 +175,7 @@
 
 /* PromptCard Component */
 .prompt_card {
-  @apply flex-1 break-inside-avoid rounded-xl shadow-gray-400 shadow-md border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
+  @apply flex-1 break-inside-avoid rounded-xl shadow-gray-400 shadow-md border border-gray-300 bg-white/40 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
 }
 
 .flex-center {

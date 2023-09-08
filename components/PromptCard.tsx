@@ -117,8 +117,8 @@ const PromptCard: React.FC<PromptCardProps> = ({
       {/* Modal */}
       {isModalOpen && (
             <div >
-            <div className="w-max my-4">
-            <h1 className="animate-typing overflow-hidden whitespace-nowrap">{completion}</h1>
+            <div className="my-4">
+            <h1 className="animate-typing overflow-hidden whitespace-normal">{completion}</h1>
             </div>
             <button className="flex text-md font-semibold cursor-pointer" onClick={toggleModal}>Close</button>
           </div>
