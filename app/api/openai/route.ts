@@ -1,7 +1,6 @@
  export const fetchData = async (content:string) => {
-    const apiKey = process.env.OPENAI_API_KEY;
-    console.log(apiKey);
-  
+    const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+
     if (!apiKey) {
       console.error("OpenAI API key is missing.");
       return;
