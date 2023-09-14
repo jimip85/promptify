@@ -27,13 +27,12 @@ const Navbar: React.FC = () => {
   return (
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex gap-2 flex-center">
-        <div className="rounded-full border-r-2 border-black">
+        <div className="rounded-full w-14 h-14 border-r-4 border-black flex justify-center">
           <Image
-            src="/images/Logo2.0.svg"
+            src="/images/P_1.1.svg"
             alt="Promptify Logo"
-            width={57}
-            height={57}
-            className="rounded-full object-fill"
+            width={25}
+            height={25}
           />
         </div>
         <p className="logo_text">Promptify</p>
