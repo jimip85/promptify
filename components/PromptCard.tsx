@@ -83,10 +83,10 @@ const PromptCard: React.FC<PromptCardProps> = ({
         </div>
         <div className="copy_btn" onClick={requestPrompt}>
           <Image
-            src={completion === post.prompt ? "/icons/tick.svg" : "/images/P_1.1.svg"}
+            src={completion === post.prompt ? "/icons/tick.svg" : "/icons/Button-Thin-Rounded.svg"}
             alt="copy-text image"
-            width={12}
-            height={12}
+            width={14}
+            height={14}
           />
         </div>
       </div>
