@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { fetchData } from "@app/api/openai/route";
+import { fetchData } from "@app/api/openai/openai";
 import { Post } from "@app/types";
 
 
