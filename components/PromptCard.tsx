@@ -29,8 +29,6 @@ const PromptCard: React.FC<PromptCardProps> = ({
   const [copied, setCopied] = useState<string>("");
   const [completion, setCompletion] = useState<string>("")
 
-
-
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);

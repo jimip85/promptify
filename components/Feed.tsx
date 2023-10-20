@@ -38,7 +38,7 @@ const PromptCardList: React.FC<PromptCardListProps> = ({
 const Feed: React.FC = () => {
   const [allPosts, setAllPosts] = useState<Post[]>([]);
 
-  // Search states
+  // Search States
   const [searchText, setSearchText] = useState<string>("");
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
@@ -73,7 +73,7 @@ const Feed: React.FC = () => {
 
     setSearchText(e.target.value);
 
-    // debounce method
+    // Debounce Method
     setSearchTimeout(
       setTimeout(() => {
         const searchResult = filterPrompts(e.target.value);
