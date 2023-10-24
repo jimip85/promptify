@@ -12,7 +12,7 @@ interface PromptCardListProps {
     handleTagClick,
   }) => {
     return (
-      <div className="mt-10 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
+      <div className="mt-8 sm:columns-2 sm:gap-6 xl:columns-3 ">
         <TransitionGroup>
           {data.map((post, index) => (
             <CSSTransition key={`${post.creator._id}-${index}`} timeout={400} classNames="fade">
