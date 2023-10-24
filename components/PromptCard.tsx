@@ -24,7 +24,6 @@ const PromptCard: React.FC<PromptCardProps> = ({
   const { data: session } = useSession<boolean>();
 
   const pathName = usePathname();
-  const router = useRouter();
 
   const [copied, setCopied] = useState<string>("");
   const [completion, setCompletion] = useState<string>("")
