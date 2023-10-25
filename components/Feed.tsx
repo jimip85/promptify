@@ -1,11 +1,10 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Search from "./Search";
 import { Post } from "@app/types";
 import filterPrompts from "@utils/searchUtility";
 import PromptCardList from "./PromptCardList";
-
 
 const Feed: React.FC = () => {
   const [allPosts, setAllPosts] = useState<Post[]>([]);
@@ -61,14 +60,12 @@ const Feed: React.FC = () => {
       </form>
 
       {/* All Prompts */}
-      {searchText ? (
-        <PromptCardList
-          data={searchedResults}
-          handleTagClick={handleTagClick}
-        />
-      ) : (
-        <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
-      )}
+      <PromptCardList
+        data={
+          searchText && searchText.length !== 0 ? searchedResults : allPosts
+        }
+        handleTagClick={handleTagClick}
+      />
     </section>
   );
 };
