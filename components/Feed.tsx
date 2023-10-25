@@ -23,6 +23,7 @@ const Feed: React.FC = () => {
     setAllPosts(data);
   };
 
+  //intialized
   useEffect(() => {
     fetchPosts();
   }, []);
