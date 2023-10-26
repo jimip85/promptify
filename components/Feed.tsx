@@ -6,6 +6,8 @@ import { Post } from "@app/types";
 import filterPrompts from "@utils/searchUtility";
 import PromptCardList from "./PromptCardList";
 
+export const fetchCache = "force-no-store";
+
 const Feed: React.FC = () => {
   const [allPosts, setAllPosts] = useState<Post[]>([]);
 
