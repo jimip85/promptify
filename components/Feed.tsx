@@ -19,7 +19,7 @@ const Feed: React.FC = () => {
   const [searchedResults, setSearchedResults] = useState<Post[]>([]);
 
   const fetchPosts = async () => {
-    const response = await fetch("/api/prompt");
+    const response = await fetch("/api/prompt", { cache: "no-store" });
     const data: Post[] = await response.json();
 
     setAllPosts(data);
