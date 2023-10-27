@@ -1,5 +1,4 @@
 import Feed from "@components/Feed";
-export const fetchCache = "force-no-store";
 
 const Home = () => {
   return (

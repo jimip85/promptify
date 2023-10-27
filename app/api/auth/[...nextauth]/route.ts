@@ -31,12 +31,12 @@ const handler = NextAuth({
       try {
         await connectToDB();
 
-        //check to see if user already exists!
+        // Check to see if the user already exists.
         const userExists = await User.findOne({
           email: profile.email,
         });
 
-        //if not, create a new user!
+        // If not, create a new user.
         if (!userExists) {
           await User.create({
             email: profile.email,
@@ -47,7 +47,7 @@ const handler = NextAuth({
 
         return true;
       } catch (error) {
-        console.log("Error checking if user exists: ", error.message);
+        console.log("Error checking if the user exists: ", error.message);
         return false;
       }
     },
