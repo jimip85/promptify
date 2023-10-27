@@ -20,5 +20,6 @@ export const POST = async (request) => {
   }
 };
 
-// revalidate every 3 seconds
-export const revalidate = 3;
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";

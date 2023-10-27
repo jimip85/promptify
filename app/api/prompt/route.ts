@@ -2,8 +2,6 @@ import Prompt from "@models/prompt";
 import { connectToDB } from "@utils/database";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-export const dynamic = "force-dynamic";
-
 export const GET = async (request) => {
   try {
     revalidatePath("/api/prompt");
@@ -19,5 +17,6 @@ export const GET = async (request) => {
   }
 };
 
-// revalidate every 3 seconds
-export const revalidate = 3;
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
