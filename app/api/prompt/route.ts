@@ -2,6 +2,8 @@ import Prompt from "@models/prompt";
 import { connectToDB } from "@utils/database";
 import { revalidatePath, revalidateTag } from "next/cache";
 
+export const dynamic = "force-dynamic";
+
 export const GET = async (request) => {
   try {
     revalidatePath("/api/prompt");
