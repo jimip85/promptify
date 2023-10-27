@@ -1,10 +1,12 @@
 import Prompt from "@models/prompt";
 import { connectToDB } from "@utils/database";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const GET = async (request) => {
   try {
-    revalidateTag("posts");
+    revalidatePath("/api/prompt");
+    revalidatePath("/");
+
     await connectToDB();
 
     const prompts = await Prompt.find({}).populate("creator");

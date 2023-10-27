@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
@@ -28,6 +28,10 @@ const CreatePrompt: React.FC = () => {
     try {
       const response = await fetch("/api/prompt/new", {
         method: "POST",
+        cache: "no-store",
+        next: {
+          tags: ["posts"],
+        },
         body: JSON.stringify({
           prompt: post.prompt,
           tag: post.tag,
