@@ -17,14 +17,16 @@ const Feed: React.FC = () => {
   const [searchedResults, setSearchedResults] = useState<Post[]>([]);
 
   const fetchPosts = async () => {
-    const response = await fetch("/api/prompt", {
-      cache: "no-store",
-      next: { tags: ["posts"] },
-    });
+    const response = await fetch(
+      "/api/prompt?sortBy=createdAt&sortOrder=desc",
+      {
+        cache: "no-store",
+        next: { tags: ["posts"] },
+      }
+    );
     const data: Post[] = await response.json();
 
-    //sort data by most recent prompts
-    setAllPosts(data.reverse());
+    setAllPosts(data);
   };
 
   //intialized
