@@ -23,7 +23,7 @@ const Feed: React.FC = () => {
     });
     const data: Post[] = await response.json();
 
-    setAllPosts(data.reverse());
+    setAllPosts(data);
   };
 
   //intialized
