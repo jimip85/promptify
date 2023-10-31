@@ -1,3 +1,4 @@
+import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import PromptCard from "./PromptCard";
 import { Post } from "@app/types";
@@ -11,17 +12,11 @@ const PromptCardList: React.FC<PromptCardListProps> = ({
   data,
   handleTagClick,
 }) => {
-  const reversedData = [...data].reverse();
-
   return (
-    <div className="mt-8 sm:columns-2 sm:gap-6 xl:columns-3 ">
+    <div className="mt-8 sm:columns-2 sm:gap-6 xl:columns-3">
       <TransitionGroup>
-        {reversedData.map((post, index) => (
-          <CSSTransition
-            key={`${post.creator._id}-${index}`}
-            timeout={400}
-            classNames="fade"
-          >
+        {data.map((post) => (
+          <CSSTransition key={post._id} timeout={400} classNames="fade">
             <div className="mb-6">
               <PromptCard post={post} handleTagClick={handleTagClick} />
             </div>
