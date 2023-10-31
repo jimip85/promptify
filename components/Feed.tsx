@@ -23,7 +23,8 @@ const Feed: React.FC = () => {
     });
     const data: Post[] = await response.json();
 
-    setAllPosts(data);
+    //sort data by most recent prompts
+    setAllPosts(data.reverse());
   };
 
   //intialized
