@@ -51,12 +51,13 @@ const Form: React.FC<FormProps> = ({
         </label>
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700">
-            Tag <span className="font-normal">(#back-end, #webdev, #API)</span>
+            Tag{" "}
+            <span className="font-normal">(e.g. #back-end, #webdev, #API)</span>
           </span>
           <input
             value={post.tag}
             onChange={(e) => setPost({ ...post, tag: e.target.value })}
-            placeholder="#tag"
+            placeholder="relevant tag"
             required
             className="form_input"
           />
