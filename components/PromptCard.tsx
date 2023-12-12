@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { fetchData } from "@app/api/openai/openai";
 import { Post } from "@app/types";
+import { getChatGPTStream } from "@app/api/openai/openai";
 
 interface PromptCardProps {
   post: Post;
@@ -21,12 +21,24 @@ const PromptCard: React.FC<PromptCardProps> = ({
   handleDelete,
 }) => {
   const { data: session } = useSession<boolean>();
-
   const pathName = usePathname();
-
   const [copied, setCopied] = useState<string>("");
   const [launchPrompt, setLaunchPrompt] = useState<string>("");
-  const [completion, setCompletion] = useState<string>("");
+  const [completion, setCompletion] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleStream = () => {
+      const onDataReceived = (data: string) => {
+        setCompletion((prevData) => [...prevData, data]);
+      };
+      getChatGPTStream(post.prompt, onDataReceived);
+    };
+
+    if (isModalOpen) {
+      handleStream();
+    }
+  }, [isModalOpen, post.prompt]);
 
   const handleCopy = () => {
     setCopied(post.prompt);
@@ -36,34 +48,9 @@ const PromptCard: React.FC<PromptCardProps> = ({
 
   const requestPrompt = () => {
     setLaunchPrompt(post.prompt);
-
-    handleStream();
-
     toggleModal();
-    setLaunchPrompt("");
+    setTimeout(() => setCopied(""), 3000);
   };
-
-  const handleStream = async () => {
-    try {
-      const responseStream = await fetchData(post.prompt);
-
-      for await (const chunk of responseStream) {
-        console.log("Received chunk:", chunk);
-
-        if (chunk === null) {
-          console.log("Stream ended");
-        } else {
-          setCompletion((prevCompletion) => prevCompletion + chunk);
-        }
-      }
-
-      console.log("Stream ended");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
