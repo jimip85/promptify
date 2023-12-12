@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { fetchData } from "@app/api/openai/openai";
 import { Post } from "@app/types";
-
 
 interface PromptCardProps {
   post: Post;
@@ -26,7 +25,8 @@ const PromptCard: React.FC<PromptCardProps> = ({
   const pathName = usePathname();
 
   const [copied, setCopied] = useState<string>("");
-  const [completion, setCompletion] = useState<string>("")
+  const [launchPrompt, setLaunchPrompt] = useState<string>("");
+  const [completion, setCompletion] = useState<string>("");
 
   const handleCopy = () => {
     setCopied(post.prompt);
@@ -34,13 +34,32 @@ const PromptCard: React.FC<PromptCardProps> = ({
     setTimeout(() => setCopied(""), 3000);
   };
 
-  const requestPrompt = async () => {
+  const requestPrompt = () => {
+    setLaunchPrompt(post.prompt);
+
+    handleStream();
+
+    toggleModal();
+    setLaunchPrompt("");
+  };
+
+  const handleStream = async () => {
     try {
-      const result = await fetchData(post.prompt);
-      setCompletion(result);
-      toggleModal();
+      const responseStream = await fetchData(post.prompt);
+
+      for await (const chunk of responseStream) {
+        console.log("Received chunk:", chunk);
+
+        if (chunk === null) {
+          console.log("Stream ended");
+        } else {
+          setCompletion((prevCompletion) => prevCompletion + chunk);
+        }
+      }
+
+      console.log("Stream ended");
     } catch (error) {
-      console.log("Promise failed", error);
+      console.error("Error:", error);
     }
   };
 
@@ -80,7 +99,11 @@ const PromptCard: React.FC<PromptCardProps> = ({
         </div>
         <div className="copy_btn" onClick={requestPrompt}>
           <Image
-            src={completion === post.prompt ? "/icons/tick.svg" : "/icons/Button-Thin-Rounded-20pt.svg"}
+            src={
+              launchPrompt === post.prompt
+                ? "/icons/tick.svg"
+                : "/icons/Button-Thin-Rounded-20pt.svg"
+            }
             alt="copy-text image"
             width={16}
             height={17}
@@ -94,31 +117,37 @@ const PromptCard: React.FC<PromptCardProps> = ({
       >
         #{post.tag}
       </p>
-      {(session?.user as { id: string })?.id === post.creator._id && pathName === "/profile" && (
-        <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
-          <p
-            className="font-inter text-md font-semibold text-purple-600 cursor-pointer"
-            onClick={handleEdit}   
-          >
-            Edit
-          </p>
-          <p
-            className="font-inter text-md font-semibold text-black cursor-pointer"
-            onClick={handleDelete}
-          >
-            Delete
-          </p>
-        </div>
-      )}
+      {(session?.user as { id: string })?.id === post.creator._id &&
+        pathName === "/profile" && (
+          <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+            <p
+              className="font-inter text-md font-semibold text-purple-600 cursor-pointer"
+              onClick={handleEdit}
+            >
+              Edit
+            </p>
+            <p
+              className="font-inter text-md font-semibold text-black cursor-pointer"
+              onClick={handleDelete}
+            >
+              Delete
+            </p>
+          </div>
+        )}
 
       {/* Modal */}
       {isModalOpen && (
-            <div >
-            <div className="my-4">
-            <h1 className="animate-typing overflow-hidden whitespace-normal">{completion}</h1>
-            </div>
-            <button className="flex text-md font-semibold cursor-pointer" onClick={toggleModal}>Close</button>
+        <div>
+          <div className="my-4">
+            <h1 className="overflow-hidden whitespace-normal">{completion}</h1>
           </div>
+          <button
+            className="flex text-md font-semibold cursor-pointer"
+            onClick={toggleModal}
+          >
+            Close
+          </button>
+        </div>
       )}
     </div>
   );
