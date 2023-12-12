@@ -37,10 +37,30 @@ const PromptCard: React.FC<PromptCardProps> = ({
   const requestPrompt = () => {
     setLaunchPrompt(post.prompt);
 
-    fetchData({ content: post.prompt, setCompletion });
+    handleStream();
 
     toggleModal();
     setLaunchPrompt("");
+  };
+
+  const handleStream = async () => {
+    try {
+      const responseStream = await fetchData(post.prompt);
+
+      for await (const chunk of responseStream) {
+        console.log("Received chunk:", chunk);
+
+        if (chunk === null) {
+          console.log("Stream ended");
+        } else {
+          setCompletion((prevCompletion) => prevCompletion + chunk);
+        }
+      }
+
+      console.log("Stream ended");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
